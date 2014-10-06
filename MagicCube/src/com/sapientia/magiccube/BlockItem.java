@@ -46,5 +46,5 @@ public class BlockItem {
 	public Button getView() {
 		return button;
 	}
-
+	
 }

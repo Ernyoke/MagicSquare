@@ -50,7 +50,7 @@ public class GameLogic implements View.OnClickListener, DialogInterface.OnDismis
 		pressed.setValue(result);
 		//if the user inserted a number(the user can also dismiss the dialog with the BACK menu button)
 		if(result > 0) {
-			if(eval()) {
+			if(eval(result)) {
 				//i have no idea what is going on here :'(
 				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
 				alertDialogBuilder.setTitle("You are WINNER motherfucker!");
@@ -65,6 +65,8 @@ public class GameLogic implements View.OnClickListener, DialogInterface.OnDismis
 				.setNegativeButton("No",new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog,int id) {
 						dialog.cancel();
+						//go back to the main menus
+						((PlayGround) context).finish();
 					}
 				});
  
@@ -73,6 +75,10 @@ public class GameLogic implements View.OnClickListener, DialogInterface.OnDismis
  
 				// show it
 				alertDialog.show();
+			}
+			else {
+				//if it was not found a winner, check if the inserted number was already used
+				clearDouble(pressed);
 			}
 		}
 	}
@@ -99,14 +105,14 @@ public class GameLogic implements View.OnClickListener, DialogInterface.OnDismis
 	}
 	
 	//evaluate the game's outcome after every move
-	private boolean eval() {
+	private boolean eval(int result) {
 		int sum = 0;
 		int tmp_sum;
 		//check vertical
 		for(int i = 0; i < size; ++i) {
 			tmp_sum = 0;
 			for(int j = 0; j < size; ++j) {
-				if(gameplay.get(i).get(j).getValue() == 0) {
+				if(gameplay.get(i).get(j).getValue() == 0 || gameplay.get(i).get(j).getValue() == 0) {
 					return false;
 				}
 				else {
@@ -160,6 +166,24 @@ public class GameLogic implements View.OnClickListener, DialogInterface.OnDismis
 		return true;
 	}
 	
+	//searching for doubles
+	private void clearDouble(BlockItem block) {
+		boolean stop = false;
+		for(ArrayList it : gameplay) {
+			for(BlockItem item : (ArrayList<BlockItem>)it) {
+				if(item != block && item.getValue() == block.getValue()) {
+					item.setDefaultValue();
+					stop = true;
+					break;
+				}
+			}
+			if(stop) {
+				break;
+			}
+		}
+	}
+	
+	//restart the game, reset defaul values
 	public void restart() {
 		for(ArrayList it : gameplay) {
 			for(BlockItem item : (ArrayList<BlockItem>)it) {
