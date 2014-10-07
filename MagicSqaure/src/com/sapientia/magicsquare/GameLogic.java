@@ -1,9 +1,11 @@
-package com.sapientia.magiccube;
+package com.sapientia.magicsquare;
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -53,16 +55,16 @@ public class GameLogic implements View.OnClickListener, DialogInterface.OnDismis
 			if(eval(result)) {
 				//i have no idea what is going on here :'(
 				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-				alertDialogBuilder.setTitle("You are WINNER motherfucker!");
+				alertDialogBuilder.setTitle(context.getString(R.string.winner));
 				alertDialogBuilder
-				.setMessage("Retry?")
+				.setMessage(context.getString(R.string.retry))
 				.setCancelable(false)
-				.setPositiveButton("Yes",new DialogInterface.OnClickListener() {
+				.setPositiveButton(context.getString(R.string.yes),new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog,int id) {
 						restart();
 					}
 				  })
-				.setNegativeButton("No",new DialogInterface.OnClickListener() {
+				.setNegativeButton(context.getString(R.string.no),new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog,int id) {
 						dialog.cancel();
 						//go back to the main menus
@@ -75,6 +77,13 @@ public class GameLogic implements View.OnClickListener, DialogInterface.OnDismis
  
 				// show it
 				alertDialog.show();
+				
+				//play some crappy sound here
+				MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.win);
+				mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+				if(!mediaPlayer.isPlaying()) {
+					mediaPlayer.start();
+				}
 			}
 			else {
 				//if it was not found a winner, check if the inserted number was already used

@@ -1,4 +1,4 @@
-package com.sapientia.magiccube;
+package com.sapientia.magicsquare;
 
 import android.content.Context;
 import android.widget.Button;

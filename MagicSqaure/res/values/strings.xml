@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">MagicSquare</string>
+    <string name="selectdimension">Please select dimension:</string>
+    <string name="title_activity_play_ground">PlayGround</string>
+    <string name="winner">You are WINNER, motherfucker!</string>
+    <string name="retry">Retry?</string>
+    <string name="yes">Yeah</string>
+    <string name="no">Fck, no!</string>
+    <string name="numdialogtitle">Choose your destiny!</string>
+    <string name="clear">Clear</string>
+
+</resources>

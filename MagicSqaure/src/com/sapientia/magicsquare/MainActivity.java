@@ -1,4 +1,6 @@
-package com.sapientia.magiccube;
+package com.sapientia.magicsquare;
+
+import com.sapientia.magicsquare.R;
 
 import android.app.Activity;
 import android.os.Bundle;

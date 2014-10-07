@@ -1,8 +1,11 @@
-package com.sapientia.magiccube;
+package com.sapientia.magicsquare;
+
+import com.sapientia.magicsquare.R;
 
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TableLayout;
@@ -25,14 +28,19 @@ public class Numpad extends Dialog{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.num_pad);
 		
+		//set title
+		this.setTitle(context.getString(R.string.numdialogtitle));
+		
 		result = -1;
 		
 		//generate numerical buttons
 		int k = 1;
 		
 		TableLayout table = (TableLayout)findViewById(R.id.table_numpad);
+		
 		for(int i = 0; i < size; ++i) {
 			TableRow row = new TableRow(context);
+			row.setGravity(Gravity.CENTER);
 			for(int j = 0; j < size; ++j) {
 				Button button = new Button(context);
 				button.setId(k);
@@ -52,6 +60,22 @@ public class Numpad extends Dialog{
 			}
 			table.addView(row);
 		}
+		//add clear button
+		Button clear =  new Button(context);
+		clear.setText(context.getString(R.string.clear));
+		clear.setTag(0);
+		clear.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				result = (int)v.getTag();
+				dismiss();
+			}
+		});
+		TableRow row = new TableRow(context);
+		row.setGravity(Gravity.CENTER);
+		row.addView(clear);
+		table.addView(row);
 	}
 	
 	//return selected number if it was one, else returned value will be -1, i guess...
